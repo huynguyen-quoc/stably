@@ -43,3 +43,9 @@ A brief description of the layout:
 2. Run `go mod download` to download the dependencies
 3. Run `go run github.com/google/wire/cmd/wire` to create DI
 4. Run `go run . ` to start server
+
+## Example CURL
+```
+curl --request GET \
+  --url 'http://localhost:8080/v1/fee?fromAmount=100&fromNetwork=ACH&fromAsset=USD&toNetwork=ethereum&toAsset=ETH&feeAsset=USD' \
+  --header 'X-Customer-Tier: 1'
