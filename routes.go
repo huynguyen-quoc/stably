@@ -5,7 +5,7 @@ import (
 )
 
 func SetupRoutes(router *gin.Engine) {
-	userGroup := router.Group("/fee")
+	userGroup := router.Group("v1/fee")
 	{
 		userHandler, _ := InitializeFeeHandler()
 		userGroup.GET("", userHandler.Get)
