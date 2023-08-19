@@ -17,9 +17,13 @@ var tierDiscountFiat = map[string]discountFunc{
 	},
 }
 
+/**
+  @param network name (eg: ethereum)
+  @return the percentage of network discount (eg: 25% -> "25")
+*/
 var tierDiscountCrypto = map[string]discountFunc{
 	"1": func(network string) string {
-		return "0"
+		return "25"
 	},
 	"2": func(network string) string {
 		return "25"
@@ -29,5 +33,8 @@ var tierDiscountCrypto = map[string]discountFunc{
 			return "25"
 		}
 		return "50"
+	},
+	"4": func(network string) string {
+		return "100"
 	},
 }

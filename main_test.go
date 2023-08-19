@@ -101,7 +101,7 @@ func TestGetUserIntegration(t *testing.T) {
 			queryParams.Set("toAsset", tc.transaction.ToAsset)
 			queryParams.Set("feeAsset", tc.transaction.FeeAsset)
 
-			req, err := http.NewRequest("GET", "v1/fee?"+queryParams.Encode(), nil)
+			req, err := http.NewRequest("GET", "/v1/fee?"+queryParams.Encode(), nil)
 			req.Header.Set("X-Customer-Tier", tc.customerTier)
 			if err != nil {
 				t.Fatal(err)

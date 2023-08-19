@@ -19,7 +19,8 @@ func InitializeFeeHandler() (handlers.FeeHandler, error) {
 	cryptoFeeServiceImpl := services.NewCryptoService()
 	fiatFeeServiceImpl := services.NewFiatService()
 	liquidityFeeServiceImpl := services.NewLiquidityFeeService()
-	feeServiceImpl := services.NewFeeService(cryptoFeeServiceImpl, fiatFeeServiceImpl, liquidityFeeServiceImpl)
+	flowFeeServiceImpl := services.NewFlowFeeService()
+	feeServiceImpl := services.NewFeeService(cryptoFeeServiceImpl, fiatFeeServiceImpl, liquidityFeeServiceImpl, flowFeeServiceImpl)
 	feeHandlerImpl := handlers.NewFeeHandler(feeServiceImpl)
 	return feeHandlerImpl, nil
 }
