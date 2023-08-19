@@ -23,7 +23,7 @@ var tierDiscountFiat = map[string]discountFunc{
 */
 var tierDiscountCrypto = map[string]discountFunc{
 	"1": func(network string) string {
-		return "25"
+		return "0"
 	},
 	"2": func(network string) string {
 		return "25"

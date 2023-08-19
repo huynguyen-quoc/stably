@@ -2,7 +2,6 @@ package services
 
 import (
 	"errors"
-	"fmt"
 	model "github.com/huy-nguyenquoc/stably/domains"
 	"github.com/huy-nguyenquoc/stably/domains/amount"
 )
@@ -26,12 +25,10 @@ func (t *FeeServiceImpl) Calculate(transaction *model.Transaction, customer *mod
 	// Calculate the base fee for the transaction.
 	tradeAmount := amount.NewCurrencyAmount(transaction.FromAmount, transaction.FromAsset)
 	cryptoFeeResult, _ := t.cryptoFeeService.Calculate(tradeAmount, transaction.ToNetwork, customer)
-	fmt.Printf("calculated crypto currency %s", cryptoFeeResult.ToAmountString())
 	fiatFeeResult, _ := t.fiatFeeService.Calculate(tradeAmount, transaction.FromNetwork, customer)
 	resultWithFiatAndCryptoFee := tradeAmount.Subtract(cryptoFeeResult).Subtract(fiatFeeResult)
 	liquidityFeeResult, name, _ := t.liquidityFeeService.Calculate(resultWithFiatAndCryptoFee)
 	resultSumLiquidityWithFiat, errWithSum := liquidityFeeResult.Add(fiatFeeResult)
-	fmt.Printf("calculated crypto currency 2 %s", resultSumLiquidityWithFiat.ToAmountString())
 	if errWithSum != nil {
 		return nil, "", errors.New("invalid.amount")
 	}
@@ -39,15 +36,14 @@ func (t *FeeServiceImpl) Calculate(transaction *model.Transaction, customer *mod
 	if errWithTotalSum != nil {
 		return nil, "", errors.New("invalid.amount")
 	}
-	//resultSumWithFlow, errWithFlow := t.flowFeeService.Calculate(tradeAmount, transaction.FromNetwork, transaction.ToNetwork, customer)
-	//if errWithFlow != nil {
-	//	return nil, "", errors.New("invalid.amount")
-	//}
-	totalSum := resultSumWithLiquidity
-	//fmt.Printf("resultSum %s", resultSumWithLiquidity.)
-	//if errWithTotal != nil {
-	//	return nil, "", errors.New("invalid.amount")
-	//}
+	resultSumWithFlow, errWithFlow := t.flowFeeService.Calculate(tradeAmount, transaction.FromNetwork, transaction.ToNetwork, customer)
+	if errWithFlow != nil {
+		return nil, "", errors.New("invalid.amount")
+	}
+	totalSum, errWithTotal := resultSumWithLiquidity.Add(resultSumWithFlow)
+	if errWithTotal != nil {
+		return nil, "", errors.New("invalid.amount")
+	}
 	// Return the lowest fee and the name of the liquidity provider.
 	return totalSum, name, nil
 }

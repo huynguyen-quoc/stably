@@ -32,7 +32,7 @@ func TestGetUserIntegration(t *testing.T) {
 			ToNetwork:   "ethereum",
 			ToAsset:     "ETH",
 			FeeAsset:    "USD",
-		}, "1", http.StatusOK, "USD", "Goose", "12.26"},
+		}, "1", http.StatusOK, "USD", "Goose", "12.76"},
 		{"TestForACHFixFeeCustomerTier2", &model.Transaction{
 			FromAmount:  "100",
 			FromNetwork: "ACH",
@@ -40,7 +40,7 @@ func TestGetUserIntegration(t *testing.T) {
 			ToNetwork:   "ethereum",
 			ToAsset:     "ETH",
 			FeeAsset:    "USD",
-		}, "2", http.StatusOK, "USD", "Goose", "9.27"},
+		}, "2", http.StatusOK, "USD", "Goose", "9.77"},
 		{"TestForACHFixFeeCustomerTier3", &model.Transaction{
 			FromAmount:  "100",
 			FromNetwork: "ACH",
@@ -48,7 +48,7 @@ func TestGetUserIntegration(t *testing.T) {
 			ToNetwork:   "ethereum",
 			ToAsset:     "ETH",
 			FeeAsset:    "USD",
-		}, "3", http.StatusOK, "USD", "Goose", "7.78"},
+		}, "3", http.StatusOK, "USD", "Goose", "8.28"},
 		{"TestForACHPercentFee", &model.Transaction{
 			FromAmount:  "320",
 			FromNetwork: "ACH",
@@ -56,7 +56,7 @@ func TestGetUserIntegration(t *testing.T) {
 			ToNetwork:   "ethereum",
 			ToAsset:     "ETH",
 			FeeAsset:    "USD",
-		}, "1", http.StatusOK, "USD", "Goose", "14.12"},
+		}, "1", http.StatusOK, "USD", "Goose", "15.72"},
 		{"TestForWire", &model.Transaction{
 			FromAmount:  "120",
 			FromNetwork: "Wire",
@@ -64,7 +64,7 @@ func TestGetUserIntegration(t *testing.T) {
 			ToNetwork:   "ethereum",
 			ToAsset:     "ETH",
 			FeeAsset:    "USD",
-		}, "1", http.StatusOK, "USD", "Goose", "35.26"},
+		}, "1", http.StatusOK, "USD", "Goose", "35.85"},
 		{"TestForWireCustomerTier3", &model.Transaction{
 			FromAmount:  "120",
 			FromNetwork: "Wire",
@@ -72,7 +72,7 @@ func TestGetUserIntegration(t *testing.T) {
 			ToNetwork:   "ethereum",
 			ToAsset:     "ETH",
 			FeeAsset:    "USD",
-		}, "3", http.StatusOK, "USD", "Goose", "7.84"},
+		}, "3", http.StatusOK, "USD", "Goose", "27.13"},
 		{"TestForCard", &model.Transaction{
 			FromAmount:  "120",
 			FromNetwork: "Card",
@@ -80,7 +80,7 @@ func TestGetUserIntegration(t *testing.T) {
 			ToNetwork:   "ethereum",
 			ToAsset:     "ETH",
 			FeeAsset:    "USD",
-		}, "1", http.StatusOK, "USD", "Goose", "13.92"},
+		}, "1", http.StatusOK, "USD", "Goose", "14.52"},
 		{"TestForUnSupported", &model.Transaction{
 			FromAmount:  "120",
 			FromNetwork: "Card2",
