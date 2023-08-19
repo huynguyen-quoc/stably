@@ -1,6 +1,7 @@
 package services
 
 import (
+	"errors"
 	model "github.com/huy-nguyenquoc/stably/domains"
 	"github.com/huy-nguyenquoc/stably/domains/amount"
 )
@@ -25,6 +26,14 @@ func (t *FeeServiceImpl) Calculate(transaction *model.Transaction, customer *mod
 	cryptoFeeResult, _ := t.cryptoFeeService.Calculate(tradeAmount, transaction.ToNetwork, customer)
 	fiatFeeResult, _ := t.fiatFeeService.Calculate(tradeAmount, transaction.FromNetwork, customer)
 	liquidityFeeResult, name, _ := t.liquidityFeeService.Calculate(tradeAmount.Subtract(cryptoFeeResult).Subtract(fiatFeeResult))
+	resultSumLiquidityWithFiat, errWithSum := liquidityFeeResult.Add(fiatFeeResult)
+	if errWithSum != nil {
+		return nil, "", errors.New("invalid.amount")
+	}
+	resultSumTotal, errWithTotalSum := resultSumLiquidityWithFiat.Add(cryptoFeeResult)
+	if errWithTotalSum != nil {
+		return nil, "", errors.New("invalid.amount")
+	}
 	// Return the lowest fee and the name of the liquidity provider.
-	return liquidityFeeResult.Add(fiatFeeResult).Add(cryptoFeeResult), name, nil
+	return resultSumTotal, name, nil
 }

@@ -1,6 +1,9 @@
 package amount
 
-import "math/big"
+import (
+	"errors"
+	"math/big"
+)
 
 type CurrencyAmount struct {
 	Amount   *Amount
@@ -21,9 +24,12 @@ func NewCurrencyAmount(amountStr string, currency string) *CurrencyAmount {
 	}
 }
 
-func (c *CurrencyAmount) Add(other *CurrencyAmount) *CurrencyAmount {
+func (c *CurrencyAmount) Add(other *CurrencyAmount) (*CurrencyAmount, error) {
+	if c.Currency != other.Currency {
+		return nil, errors.New("currency must be same")
+	}
 	result := c.Amount.Add(other.Amount)
-	return &CurrencyAmount{Amount: result, Currency: c.Currency}
+	return &CurrencyAmount{Amount: result, Currency: c.Currency}, nil
 }
 
 func (c *CurrencyAmount) Subtract(other *CurrencyAmount) *CurrencyAmount {

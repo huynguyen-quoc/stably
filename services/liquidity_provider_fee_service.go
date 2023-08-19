@@ -15,7 +15,8 @@ func NewLiquidityFeeService() *LiquidityFeeServiceImpl {
 	feeMap := map[string]func(txnAmount *amount.CurrencyAmount) *amount.CurrencyAmount{
 		"Duck": func(txnAmount *amount.CurrencyAmount) *amount.CurrencyAmount {
 			five := amount.NewCurrencyAmount("5", "USD")
-			return five.Percent("0.1").Add(five)
+			result, _ := five.Percent("0.1").Add(five)
+			return result
 		},
 		"Goose": func(txnAmount *amount.CurrencyAmount) *amount.CurrencyAmount {
 			return txnAmount.Percent("0.3")

@@ -31,7 +31,10 @@ func (f *FeeHandlerImpl) Get(c *gin.Context) {
 		customerTier = "1"
 	}
 	tier := &model.Customer{Tier: customerTier}
-	amount, name, _ := f.feeService.Calculate(transferQuery, tier)
+	amount, name, err := f.feeService.Calculate(transferQuery, tier)
+	if err != nil {
+		c.JSON(400, gin.H{"error": "invalid amount"})
+	}
 	// Process the transferQuery object or perform necessary operations
 	c.JSON(200, gin.H{
 		"fee":      amount.ToAmountString(),

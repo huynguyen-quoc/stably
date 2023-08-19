@@ -9,11 +9,20 @@ func TestCurrencyAmountOperations(t *testing.T) {
 	amount2 := NewCurrencyAmount("78.901234", "USD")  // Another example amount
 
 	// Test Add
-	sum := amount1.Add(amount2)
+	sum, _ := amount1.Add(amount2)
 	expectedSumStr := "202.36"
 	if sum.ToAmountString() != expectedSumStr {
 		t.Errorf("Expected %s, but got %s", expectedSumStr, sum.ToAmountString())
 	}
+	t.Run("testing add method for amounts with different currencies", func(t *testing.T) {
+		amountWithUSD := NewCurrencyAmount("1", "USD")
+		amountWithEUR := NewCurrencyAmount("2", "EUR")
+		_, err := amountWithUSD.Add(amountWithEUR)
+		expectedErrorStr := "currency must be same"
+		if err.Error() != expectedErrorStr {
+			t.Errorf("Expected %s, but got %s", expectedErrorStr, err.Error())
+		}
+	})
 
 	// Test Subtract
 	difference := amount1.Subtract(amount2)
